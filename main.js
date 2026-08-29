@@ -74,3 +74,13 @@ resetBtn.addEventListener("click", () => {
         alert.style.display = "none"
     })
 })
+// Zooming
+document.addEventListener('touchend', function (event) {
+  var now = (new Date()).getTime();
+  if (now - lastTouchEnd <= 300) {
+    event.preventDefault();
+  }
+  lastTouchEnd = now;
+}, false);
+
+var lastTouchEnd = 0;
