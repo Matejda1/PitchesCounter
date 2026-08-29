@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pitches counter</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Pitches counter</h1>
+    <div>
+        <div class="stats">
+            <p class="pitches">Pitches: <span id="pitches">0</span></p>
+            <p class="strikes">Strikes: <span id="strikes">0</span></p>
+            <p class="balls">Balls: <span id="balls">0</span></p>
+        </div>
+        <div class="btns">
+            <button id="strike-btn">Strike</button>
+            <button id="ball-btn">Ball</button>
+            <button id="foul-btn">Foul</button>
+            <button id="reset-btn">Reset Pitcher</button>
+        </div>
+    </div>
+
+    <div class="alert" style="display: none;">
+        <div class="content">
+            <h3>Are you sure? You will reset whole pitch count.</h3>
+            <div class="btns-container">
+                <button id="yes-btn">Yes</button>
+                <button id="no-btn">No</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>© <span id="year"></span> Všechna práva vyhrazena.
+        <div>
+            Author: <a href="https://patrikmatejka.cz/">Patrik Matějka</a>
+        </div>
+    </footer>
+
+    <script src="main.js" defer></script>
+    <script>
+        // Footer
+        let year = new Date().getFullYear();
+        const footerYear = document.querySelector("#year");
+        footerYear.innerHTML = year;
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,157 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    text-align: center;
+}
+
+/* Main content */
+.stats {
+    width: 90%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 1.3rem;
+    background-color: black;
+    color: white;
+}
+
+.stats>p {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    gap: 10px;
+    padding: 10px;
+}
+
+
+.pitches {
+    color: gray;
+}
+
+.strikes {
+    color: red;
+}
+
+.balls {
+    color: #0077FF;
+}
+
+.stats>p>span {
+    display: block;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.btns {
+    width: 90%;
+    margin-top: 10px;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    align-content: center;
+    justify-content: center;
+    gap: 10px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btns>button {
+    padding: 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    color: white;
+    height: 100px;
+}
+
+.btns>button:hover {
+    scale: 110%;
+    transition: all 0.3s;
+}
+
+.btns>button:active,
+#yes-btn:active,
+#no-btn:active {
+    border: 1px solid black;
+}
+
+#strike-btn {
+    background-color: red;
+}
+
+#ball-btn {
+    background-color: #0077FF;
+}
+
+#foul-btn {
+    background-color: orange;
+}
+
+#reset-btn {
+    background-color: gray;
+}
+
+/* Alert */
+.alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.content {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    display: flex;
+    gap: 10px;
+    flex-direction: column;
+    align-items: center;
+}
+
+#yes-btn {
+    background-color: green;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#no-btn {
+    background-color: red;
+    color: white;
+    outline: none;
+    border: none;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+#yes-btn:hover,
+#no-btn:hover {
+    scale: 105%;
+    transition: all 0.4s;
+}
+
+/* Footer */
+footer{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    background-color: whitesmoke;
+    padding: 10px;
+}
