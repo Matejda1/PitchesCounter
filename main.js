@@ -14,32 +14,46 @@ const noBtn = document.querySelector("#no-btn")
 
 
 // Main code
-let pitch = 0
-let strike = 0
-let ball = 0
+let pitch = parseInt(localStorage.getItem("pitch")) || 0
+let strike = parseInt(localStorage.getItem("strike")) || 0
+let ball = parseInt(localStorage.getItem("ball"))  || 0
+
+function updateUI() {
+    pitches.innerHTML = pitch
+    strikes.innerHTML = strike
+    balls.innerHTML = ball
+}
+
+updateUI()
+
+function saveData() {
+    localStorage.setItem("pitch", pitch)
+    localStorage.setItem("strike", strike)
+    localStorage.setItem("ball", ball)
+}
 
 strikeBtn.addEventListener("click", () => {
     pitch++
     strike++
 
-    pitches.innerHTML = pitch
-    strikes.innerHTML = strike
+    saveData()
+    updateUI()
 })
 
 ballBtn.addEventListener("click", () => {
     pitch++
     ball++
 
-    pitches.innerHTML = pitch
-    balls.innerHTML = ball
+    saveData()
+    updateUI()
 })
 
 foulBtn.addEventListener("click", () => {
     pitch++
     strike++
 
-    pitches.innerHTML = pitch
-    strikes.innerHTML = strike
+    saveData()
+    updateUI()
 })
 
 resetBtn.addEventListener("click", () => {
@@ -52,9 +66,8 @@ resetBtn.addEventListener("click", () => {
         strike = 0
         ball = 0
 
-        pitches.innerHTML = pitch
-        strikes.innerHTML = strike
-        balls.innerHTML = ball
+        saveData()
+        updateUI()
     })
 
     noBtn.addEventListener("click", () => {
