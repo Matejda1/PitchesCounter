@@ -13,6 +13,7 @@
 :root {
     --main-background: #FFF;
     --secondary-background: #000;
+    --menu-background-color: #F2F2F2;
     --main-color: #FFF;
     --popis-color: #808080;
     --secondary-color: #6B6B6B;
@@ -28,17 +29,13 @@
 /* Header */
 header {
     width: 100%;
-}
-
-.header-main-container {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 /* Nav */
-.header-main-container > svg {
+header>svg {
     position: absolute;
     left: 0;
     top: 0;
@@ -54,10 +51,139 @@ header {
 }
 
 /* Menu */
-.menu{
+.overlay {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.menu {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    bottom: 0;
+    background-color: var(--main-background);
+    width: 100%;
+    height: 80vh;
+    border-radius: 20px 20px 0 0;
+}
+
+.hide {
+    display: none;
+}
+
+.menu-container-1 {
+    width: 90%;
+    margin-top: 3vh;
+    display: flex;
+    justify-content: space-between;
+}
+
+.menu-container-1>p {
+    color: var(--button-text-secondary);
+    font-weight: bold;
+    font-size: 2rem;
+}
+
+.menu-container-1>span {
+    background-color: var(--menu-background-color);
+    border-radius: 50%;
+    padding: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.menu-close-icon:hover,
+header>svg {
+    cursor: pointer;
+}
+
+.menu-container-2 {
+    width: 100%;
+    margin-top: 3vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.menu-container-heading {
+    color: var(--secondary-color);
+    font-size: 1.2rem;
+}
+
+.menu-container-2>div {
+    width: 100%;
+    margin-top: 2vh;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.menu-container-2>div>div {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 15px 20px;
+    background-color: var(--menu-background-color);
+    border-radius: 10px;
+}
+
+.menu-container-2-popis {
+    color: var(--secondary-color);
+
+}
+
+.menu-container-2-nazev {
+    color: var(--button-text-secondary);
+    margin-top: 3px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.menu-container-2-svg {
+    border-radius: 100%;
+    padding: 10px;
+    width: auto;
+    height: auto;
+    cursor: pointer;
+}
+
+.menu-container-2-svg:hover {
+    background-color: var(--main-background);
+}
+
+.menu-container-3 {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3vh;
+}
+
+.menu-container-3>.menu-container-heading {
+    align-self: center;
+}
+
+.menu-container-3>button {
+    border: none;
+    background-color: var(--secondary-background);
+    color: var(--main-color);
+    padding: 15px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1vh;
+    cursor: pointer;
+}
+
+.menu-container-3>button:hover {
+    background-color: var(--secondary-color);
+    transition: all 0.1s;
+    color: var(--button-text-secondary);
+}
+
+.menu-container-3>p {
+    margin-top: 1vh;
+    color: var(--secondary-color);
+    font-size: 1.2rem;
 }
 
 /* Main content */
@@ -260,31 +386,61 @@ header {
 }
 
 .content {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
+    background-color: var(--main-background);
+    padding: 40px;
+    border-radius: 20px;
     display: flex;
     gap: 10px;
     flex-direction: column;
     align-items: center;
 }
 
+#alert-heading {
+    font-size: 1.7rem;
+}
+
+#alert-content {
+    color: var(--secondary-color);
+    font-size: 1rem;
+}
+
+.content > input {
+    width: 100%;
+    padding: 5px;
+    font-size: 1.2rem;
+    background-color: var(--menu-background-color);
+    border: solid 2px var(--secondary-background);
+    border-radius: 5px;
+}
+
+.btns-container {
+    margin-top: 5px;
+    display: flex;
+    gap: 10px;
+}
+
 #yes-btn {
-    background-color: green;
+    background-color: var(--secondary-background);
     color: white;
+    font-weight: bold;
     outline: none;
     border: none;
     padding: 15px;
     border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 #no-btn {
-    background-color: red;
-    color: white;
+    background-color: var(--menu-background-color);
+    color: var(--button-text-secondary);
+    font-weight: bold;
     outline: none;
     border: none;
     padding: 15px;
     border-radius: 10px;
+    font-size: 1.2rem;
+    cursor: pointer;
 }
 
 #yes-btn:hover,
