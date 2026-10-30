@@ -42,13 +42,17 @@ const fullResetBtn = document.querySelector("#fullReset")
 let pitch = parseInt(localStorage.getItem("pitch")) || 0
 let strike = parseInt(localStorage.getItem("strike")) || 0
 let ball = parseInt(localStorage.getItem("ball")) || 0
-let lastFoul = localStorage.getItem("lastFoul") || false
 let strikeCount = parseInt(localStorage.getItem("strikeCount")) || 0
 let ballCount = parseInt(localStorage.getItem("ballCount")) || 0
+let prevCounts = JSON.parse(localStorage.getItem("prevCounts")) || { strikeCount: 0, ballCount: 0 }
 let inning = parseInt(localStorage.getItem("inning")) || 1
 let lastTouch = localStorage.getItem("lastTouch") || " "
-let pitcherName = localStorage.getItem("pitcherName") || ""
+let pitcherName = localStorage.getItem("pitcherName") || "Add pitcher"
 let pitcherJersey = localStorage.getItem("pitcherJersey") || ""
+
+function snapshot() {
+    prevCounts = { strikeCount, ballCount }
+}
 
 function updateUI() {
     pitches.innerHTML = pitch
@@ -77,6 +81,9 @@ function updateUI() {
         setCount(ballDots, ballCount)
         setCount(strikeDots, strikeCount)
     }
+
+    strikeDots.setAttribute('aria-label', strikeCount + " strikes from 3")
+    ballDots.setAttribute('aria-label', ballCount + " balls from 4")
 }
 
 updateUI()
@@ -85,13 +92,13 @@ function saveData() {
     localStorage.setItem("pitch", pitch)
     localStorage.setItem("strike", strike)
     localStorage.setItem("ball", ball)
-    localStorage.setItem("lastFoul", lastFoul)
     localStorage.setItem("strikeCount", strikeCount)
     localStorage.setItem("ballCount", ballCount)
     localStorage.setItem("inning", inning)
     localStorage.setItem("lastTouch", lastTouch)
     localStorage.setItem("pitcherName", pitcherName)
     localStorage.setItem("pitcherJersey", pitcherJersey)
+    localStorage.setItem("prevCounts", JSON.stringify(prevCounts))
 }
 
 function setCount(conatiner, count) {
@@ -102,6 +109,7 @@ function setCount(conatiner, count) {
 }
 
 strikeBtn.addEventListener("click", () => {
+    snapshot()
     pitch++
     strike++
     strikeCount++
@@ -113,6 +121,7 @@ strikeBtn.addEventListener("click", () => {
 })
 
 ballBtn.addEventListener("click", () => {
+    snapshot()
     pitch++
     ball++
     ballCount++
@@ -124,16 +133,13 @@ ballBtn.addEventListener("click", () => {
 })
 
 foulBtn.addEventListener("click", () => {
+    snapshot()
     pitch++
     strike++
-
     lastTouch = "foul"
 
     if (strikeCount < 2) {
         strikeCount++
-        lastFoul = true
-    } else {
-        lastFoul = false
     }
 
     saveData()
@@ -141,14 +147,13 @@ foulBtn.addEventListener("click", () => {
 })
 
 resetBtn.addEventListener("click", () => {
-    alert("Reset pitch count?", "This will reset the whole pitch count.", "Reset", "Cancel")
-
-    alertYesBtn.addEventListener("click", () => {
+    showAlert("Reset pitch count?", "This will reset the whole pitch count.", "Reset", "Cancel", () => {
         pitch = 0
         strike = 0
         ball = 0
         strikeCount = 0
         ballCount = 0
+
         lastTouch = " "
 
         saveData()
@@ -157,7 +162,11 @@ resetBtn.addEventListener("click", () => {
 })
 
 inningBtn.addEventListener("click", () => {
+    snapshot()
     inning++
+
+    strikeCount = 0
+    ballCount = 0
 
     lastTouch = "inning"
 
@@ -166,29 +175,19 @@ inningBtn.addEventListener("click", () => {
 })
 
 backBtn.addEventListener("click", () => {
-    if (lastTouch == "strike") {
+    if (lastTouch == "strike" || lastTouch == "foul") {
         pitch--
         strike--
-        strikeCount--
-        if (strikeCount == -1) {
-            strikeCount = 2
-        }
     } else if (lastTouch == "ball") {
         pitch--
         ball--
-        ballCount--
-        if (ballCount == -1) {
-            ballCount = 3
-        }
-    } else if (lastTouch == "foul") {
-        pitch--
-        strike--
-
-        if (lastFoul) {
-            strikeCount--
-        }
     } else if (lastTouch == "inning") {
         inning--
+    }
+
+    if (["strike", "ball", "foul", "inning"].includes(lastTouch)) {
+        strikeCount = prevCounts.strikeCount
+        ballCount = prevCounts.ballCount
     }
 
     lastTouch = " "
@@ -196,58 +195,57 @@ backBtn.addEventListener("click", () => {
     saveData()
     updateUI()
 })
+
+fullResetBtn.addEventListener("click", () => {
+    showAlert("Reset whole pitch count?", "This will reset all innings and pitches, And name,number of pitcher", "Reset", "Cancel", () => {
+        pitch = 0
+        strike = 0
+        ball = 0
+        strikeCount = 0
+        ballCount = 0
+        lastTouch = " "
+        inning = 1
+        pitcherName = "Add pitcher"
+        pitcherJersey = ""
+        saveData()
+        updateUI()
+    })
+})
 // Name & number functions 
 pitcherNameBtn.addEventListener("click", () => {
-    alertContainer.style.display = "flex"
-
-    alertHeading.innerHTML = "Change pitcher name"
-    alertContent.innerHTML = ""
-    alertYesBtn.innerHTML = "Confirm"
-    alertNoBtn.innerHTML = "Cancel"
+    showAlert("Change pitcher name", "", "Confirm", "Cancel")
     pitcherNameInput.style.display = "block"
-    alertYesBtn.addEventListener("click", () => {
-        if (pitcherNameInput.value != "") {
-            alertContainer.style.display = "none"
-            pitcherName = pitcherNameInput.value
-            saveData()
-            updateUI()
-            pitcherNameInput.style.display = "none"
-        } else {
+
+    alertYesBtn.onclick = () => {
+        if (pitcherNameInput.value.trim() === "") {
             alertContent.innerHTML = "Please type name of pitcher"
+            return
         }
-    })
-    alertNoBtn.addEventListener("click", () => {
-        alertContainer.style.display = "none"
+        pitcherName = pitcherNameInput.value.trim()
+        pitcherNameInput.value = ""
         pitcherNameInput.style.display = "none"
-    })
+        alertContainer.style.display = "none"
+        saveData()
+        updateUI()
+    }
 })
 
 pitcherJerseyBtn.addEventListener("click", () => {
-    alertContainer.style.display = "flex"
-
-    alertHeading.innerHTML = "Change pitcher number"
-    alertContent.innerHTML = ""
-    alertYesBtn.innerHTML = "Confirm"
-    alertNoBtn.innerHTML = "Cancel"
+    showAlert("Change pitcher number", "", "Confirm", "Cancel")
     pitcherJerseyInput.style.display = "block"
-    alertYesBtn.addEventListener("click", () => {
-        if (pitcherJerseyInput.value != "") {
-            alertContainer.style.display = "none"
-            pitcherJersey = "#" + pitcherJerseyInput.value
-            saveData()
-            updateUI()
-            pitcherJerseyInput.style.display = "none"
-        } else {
-            alertContent.innerHTML = "Please type number of pitcher"
-        }
-    })
-    alertNoBtn.addEventListener("click", () => {
-        alertContainer.style.display = "none"
-        pitcherJerseyInput.style.display = "none"
-    })
 
-    saveData()
-    updateUI()
+    alertYesBtn.onclick = () => {
+        if (pitcherJerseyInput.value.trim() === "") {
+            alertContent.innerHTML = "Please type number of pitcher"
+            return
+        }
+        pitcherJersey = "#" + pitcherJerseyInput.value.trim()
+        pitcherJerseyInput.value = ""
+        pitcherJerseyInput.style.display = "none"
+        alertContainer.style.display = "none"
+        saveData()
+        updateUI()
+    }
 })
 
 // Zooming
@@ -262,21 +260,25 @@ document.addEventListener('touchend', function (event) {
 var lastTouchEnd = 0
 
 // Alert function
-function alert(heading, content, yesBtn, noBtn) {
+function showAlert(heading, content, yesBtn, noBtn, onYes) {
     alertHeading.innerHTML = heading
     alertContent.innerHTML = content
     alertYesBtn.innerHTML = yesBtn
     alertNoBtn.innerHTML = noBtn
 
+    pitcherNameInput.style.display = "none"
+    pitcherJerseyInput.style.display = "none"
+
     alertContainer.style.display = "flex"
 
-    alertYesBtn.addEventListener("click", () => {
+    alertYesBtn.onclick = () => {
         alertContainer.style.display = "none"
-    })
+        if (onYes) onYes()
+    }
 
-    alertNoBtn.addEventListener("click", () => {
+    alertNoBtn.onclick = () => {
         alertContainer.style.display = "none"
-    })
+    }
 }
 
 // Menu
@@ -296,27 +298,4 @@ menuCloseIcon.addEventListener("click", () => {
     header.classList.toggle("hide")
     main.classList.toggle("hide")
     footer.classList.toggle("hide")
-})
-
-fullResetBtn.addEventListener("click", () => {
-    alert("Reset whole pitch count?", "This will reset all innings and pitches", "Reset", "Cancel")
-
-    alertYesBtn.addEventListener("click", () => {
-        pitch = 0
-        strike = 0
-        ball = 0
-        strikeCount = 0
-        ballCount = 0
-        lastTouch = " "
-        inning = 1
-        pitcherName = ""
-        pitcherJersey = ""
-        alertContainer.style.display = "none"
-
-        saveData()
-        updateUI()
-    })  
-    alertNoBtn.addEventListener("click", () => {
-        alertContainer.style.display = "none"
-    })
 })

@@ -67,7 +67,7 @@
         <div class="menu-container-3">
             <p class="menu-container-heading">GAME</p>
             <button id="fullReset">Reset Game</button>
-            <p>Resets all innings and pitch count.</p>
+            <p>Resets all innings and pitch count. And name, number of pitcher.</p>
         </div>
     </section>
     <!-- == Main == -->
@@ -79,12 +79,12 @@
                 <p class="balls">BALLS <span id="balls">0</span></p>
             </div>
             <div class="count">
-                <div class="dots dots--strike" role="img" aria-label="2 strikes ze 3">
+                <div class="dots dots--strike" role="img" aria-label="0 strikes from 3">
                     <span class="dots__label">S</span>
                     <i></i><i></i>
                 </div>
 
-                <div class="dots dots--ball" role="img" aria-label="3 balls ze 4">
+                <div class="dots dots--ball" role="img" aria-label="0 balls from 4">
                     <span class="dots__label">B</span>
                     <i></i><i></i><i></i>
                 </div>
@@ -113,7 +113,7 @@
             <h3 id="alert-heading">Reset pitch count?</h3>
             <p id="alert-content">This will reset the whole Pitch count for Jan Novák.</p>
             <input type="text" name="pitcherName" id="pitcherName" style="display: none;">
-            <input type="text" name="pitcherJersey" id="pitcherJersey" style="display: none;">
+            <input type="number" name="pitcherJersey" id="pitcherJersey" style="display: none;">
             <div class="btns-container">
                 <button id="no-btn">Cancel</button>
                 <button id="yes-btn">Reset</button>

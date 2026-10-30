@@ -162,7 +162,8 @@ header>svg {
     align-self: center;
 }
 
-.menu-container-3>button {
+.menu-container-3>button,
+.menu-container-3 > a {
     border: none;
     background-color: var(--secondary-background);
     color: var(--main-color);
@@ -184,6 +185,13 @@ header>svg {
     margin-top: 1vh;
     color: var(--secondary-color);
     font-size: 1.2rem;
+}
+
+.menu-container-3 > a{
+    background-color: #FFDD00;
+    color:  var(--button-text-secondary);
+    text-align: center;
+    text-decoration: none;
 }
 
 /* Main content */
