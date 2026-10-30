@@ -7,36 +7,123 @@
     <title>Pitches counter</title>
     <link rel="stylesheet" href="style.css">
     <!-- Umami Cloud -->
-     <script defer src="https://cloud.umami.is/script.js" data-website-id="2ae76b09-f7d2-4b9e-9c4e-3755cec2a50a"></script>
+    <script defer src="https://cloud.umami.is/script.js"
+        data-website-id="2ae76b09-f7d2-4b9e-9c4e-3755cec2a50a"></script>
 </head>
 
-<body>
-    <h1>Pitches counter</h1>
-    <div>
+<body class="body">
+    <!-- == Header == -->
+    <header class="header">
+        <svg class="menu-icon" xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 -960 960 960" width="3rem"
+            fill="#000">
+            <path d="M120-240v-80h720v80H120Zm0-200v-80h720v80H120Zm0-200v-80h720v80H120Z" />
+        </svg>
+        <div>
+            <h1>Pitches Counter</h1>
+            <div class="header-contaniner">
+                <p><span class="nameOfPitcher"></span> <span class="numberOfPitcher"></span></p>
+                <p>INNING: <span id="innings"></span></p>
+            </div>
+        </div>
+    </header>
+    <!-- == Menu == -->
+    <section class="menu" style="display: none;">
+        <div class="menu-container-1">
+            <p>Menu</p>
+            <span>
+                <svg class="menu-close-icon" xmlns="http://www.w3.org/2000/svg" height="2rem" viewBox="0 -960 960 960" width="2rem" fill="#000">
+                    <path
+                        d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                </svg>
+            </span>
+        </div>
+        <div class="menu-container-2">
+            <p class="menu-container-heading">PITCHER</p>
+            <div>
+                <div>
+                    <div>
+                        <p class="menu-container-2-popis">NAME</p>
+                        <p class="menu-container-2-nazev nameOfPitcherMenu">Jan Novák</p>
+                    </div>
+                    <svg class="menu-container-2-svg name-svg" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 -960 960 960" width="1.5rem"
+                        fill="#6B6B6B">
+                        <path
+                            d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                    </svg>
+                </div>
+                <div>
+                    <div>
+                        <p class="menu-container-2-popis">NUMBER</p>
+                        <p class="menu-container-2-nazev numberOfPitcherMenu">99</p>
+                    </div>
+                    <svg class="menu-container-2-svg number-svg" xmlns="http://www.w3.org/2000/svg" height="1.5rem" viewBox="0 -960 960 960" width="1.5rem"
+                        fill="#6B6B6B">
+                        <path
+                            d="M200-200h57l391-391-57-57-391 391v57Zm-80 80v-170l528-527q12-11 26.5-17t30.5-6q16 0 31 6t26 18l55 56q12 11 17.5 26t5.5 30q0 16-5.5 30.5T817-647L290-120H120Zm640-584-56-56 56 56Zm-141 85-28-29 57 57-29-28Z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div class="menu-container-3">
+            <p class="menu-container-heading">GAME</p>
+            <button id="fullReset">Reset Game</button>
+            <p>Resets all innings and pitch count. And name, number of pitcher.</p>
+        </div>
+    </section>
+    <!-- == Main == -->
+    <main class="main">
         <div class="stats">
-            <p class="pitches">Pitches: <span id="pitches">0</span></p>
-            <p class="strikes">Strikes: <span id="strikes">0</span></p>
-            <p class="balls">Balls: <span id="balls">0</span></p>
+            <p class="pitches">PITCHES <span id="pitches">0</span></p>
+            <div class="stats-container">
+                <p class="strikes">STRIKES <span id="strikes">0</span></p>
+                <p class="balls">BALLS <span id="balls">0</span></p>
+            </div>
+            <div class="count">
+                <div class="dots dots--strike" role="img" aria-label="0 strikes from 3">
+                    <span class="dots__label">S</span>
+                    <i></i><i></i>
+                </div>
+
+                <div class="dots dots--ball" role="img" aria-label="0 balls from 4">
+                    <span class="dots__label">B</span>
+                    <i></i><i></i><i></i>
+                </div>
+            </div>
         </div>
         <div class="btns">
             <button id="strike-btn">Strike</button>
             <button id="ball-btn">Ball</button>
             <button id="foul-btn">Foul</button>
             <button id="reset-btn">Reset Pitcher</button>
+            <button id="back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" height="30px" viewBox="0 -960 960 960" width="30px"
+                    fill="#6B6B6B">
+                    <path
+                        d="M280-200v-80h284q63 0 109.5-40T720-420q0-60-46.5-100T564-560H312l104 104-56 56-200-200 200-200 56 56-104 104h252q97 0 166.5 63T800-420q0 94-69.5 157T564-200H280Z" />
+                </svg>
+                Back
+            </button>
+            <button id="inning-btn">Next inning ></button>
         </div>
-    </div>
+    </main>
 
+    <!-- == Alert == -->
     <div class="alert" style="display: none;">
         <div class="content">
-            <h3>Are you sure? You will reset whole pitch count.</h3>
+            <h3 id="alert-heading">Reset pitch count?</h3>
+            <p id="alert-content">This will reset the whole Pitch count for Jan Novák.</p>
+            <input type="text" name="pitcherName" id="pitcherName" style="display: none;">
+            <input type="number" name="pitcherJersey" id="pitcherJersey" style="display: none;">
             <div class="btns-container">
-                <button id="yes-btn">Yes</button>
-                <button id="no-btn">No</button>
+                <button id="no-btn">Cancel</button>
+                <button id="yes-btn">Reset</button>
             </div>
         </div>
     </div>
 
-    <footer>© <span id="year"></span> Všechna práva vyhrazena.
+    <!-- == Footer == -->
+    <footer class="footer">
+        © <span id="year"></span> Všechna práva vyhrazena.
         <div>
             Author: <a href="https://patrikmatejka.cz/">Patrik Matějka</a>
         </div>
